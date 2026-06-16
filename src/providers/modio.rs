@@ -208,8 +208,8 @@ impl ModProvider for ModioProvider {
         cache: ProviderCache,
         _blob_cache: &BlobCache,
     ) -> Result<ModResponse> {
-        use modio::filter::{Eq, In};
-        use modio::mods::filters::{Id, NameId, Visible};
+        use modio::filter::Eq;
+        use modio::mods::filters::NameId;
 
         if spec.url.contains("?preview=") {
             bail!("Preview mod links cannot be added directly, please subscribe to the mod on mod.io and and then use the non-preview link.");
@@ -433,7 +433,7 @@ impl ModProvider for ModioProvider {
                     &name_id, id, modfile_id
                 ))))
             } else {
-                let filter = NameId::eq(name_id).and(Visible::_in(vec![0, 1]));
+                let filter = NameId::eq(name_id);
                 let mut mods = self
                     .modio
                     .game(MODIO_DRG_ID)
